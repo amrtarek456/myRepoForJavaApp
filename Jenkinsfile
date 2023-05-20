@@ -38,7 +38,8 @@ pipeline {
                   println("Not Equal")
                 }
                 oldVersion = mavenPom.version
-                env.version = oldVersion
+                //env.version = oldVersion
+                env.version = echo "oldVersion"
 
                 println(oldVersion)
                 println(env.version)

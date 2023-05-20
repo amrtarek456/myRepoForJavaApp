@@ -17,6 +17,6 @@
         dest: /var/www/html/
     - name: Copy jar to backup
       copy:
-        src: /var/lib/jenkins/workspace/nexus/MyWebApp/target/'*.jar'
+        src: /var/lib/jenkins/workspace/nexus/MyWebApp/target/MyWebApp.jar
         dest: /var/lib/jenkins/workspace/nexus/MyWebApp/backup/backup.jar
 ...

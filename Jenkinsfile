@@ -21,7 +21,8 @@ pipeline {
         stage('Excute Ansible') {
             steps {
              ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'apache.yml'  }
-        }  
+        }
+    }  
     stage ('Build') {
       steps {
       sh 'mvn clean install -f MyWebApp/pom.xml'

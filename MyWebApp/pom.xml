@@ -1,21 +1,54 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.mkyong</groupId>
-  <artifactId>MyWebApp</artifactId>
-  <packaging>jar</packaging>
-  <version>1.0</version>
-  <name>MyWebApp Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <finalName>MyWebApp</finalName>
-  </build>
-</project>
+def oldVersion = null
+pipeline {
+    
+    agent any
+     tools {
+  maven 'MAVEN3'
+  }
+    
+  
+    stages {
+        stage('Code checkout') {
+            steps {
+             checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/amrtarek456/myRepoForJavaApp.git']])
+    }
+        }
+      
+    stage ('Build') {
+      steps {
+      sh 'mvn clean install -f MyWebApp/pom.xml'
+      }
+    }
+    
+    
+    
+     stage ("Upload to Nexus") {
+            steps {
+                script{
+                println(oldVersion)
+                def mavenPom = readMavenPom file: 'MyWebApp/pom.xml'
+                if (mavenPom.equals(oldVersion))
+                {
+                  println("Equal")
+                }
+                else {
+                  println("Not Equal")
+                }
+                oldVersion = mavenPom
+                println(oldVersion)
+                nexusArtifactUploader artifacts: [[artifactId: 'MyWebApp', classifier: '', file: "MyWebApp/target/MyWebApp.jar", type: 'jar']], credentialsId: "NEXUS_CRED", groupId: 'com.dept.app', nexusUrl: '20.231.52.56:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'myapp', version: "${mavenPom.version}"
+          
+                }
+                 }
+        }
+    
+     
+}
+ post{
+        always{
+            emailext to: "amrt462@gmail.com",
+            subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+            body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}"
+        }
+    }
+}

@@ -1,4 +1,3 @@
-def oldVersion = null
 pipeline {
     
     agent any
@@ -25,6 +24,7 @@ pipeline {
      stage ("Upload to Nexus") {
             steps {
                 script{
+                def oldVersion
                 println(oldVersion)
                 def mavenPom = readMavenPom file: 'MyWebApp/pom.xml'
                 if (mavenPom.equals(oldVersion))

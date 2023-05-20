@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script{
                 def oldVersion
-                println(env.oldVersion)
+                println(oldVersion)
                 mavenPom = readMavenPom file: 'MyWebApp/pom.xml'
                 if (mavenPom.equals(oldVersion))
                 {
@@ -34,7 +34,7 @@ pipeline {
                   println("Not Equal")
                 }
                 oldVersion = mavenPom.version
-                println(env.oldVersion)
+                println(oldVersion)
                 nexusArtifactUploader artifacts: [[artifactId: 'MyWebApp', classifier: '', file: "MyWebApp/target/MyWebApp.jar", type: 'jar']], credentialsId: "NEXUS_CRED", groupId: 'com.dept.app', nexusUrl: '20.231.52.56:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'myapp', version: "${mavenPom.version}"
           
                 }

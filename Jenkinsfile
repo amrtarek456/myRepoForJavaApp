@@ -15,19 +15,17 @@ pipeline {
              checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/amrtarek456/myRepoForJavaApp.git']])
     }
         }
-      
-    stage('Excute Ansible') {
-            steps {
-             ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'playbook.yml'  }
-        }
     
     stage ('Build') {
       steps {
       sh 'mvn clean install -f MyWebApp/pom.xml'
       }
     }
-    
-    
+      
+    stage('Excute Ansible') {
+            steps {
+             ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'playbook.yml'  }
+        }
     
      stage ("Upload to Nexus") {
             steps {

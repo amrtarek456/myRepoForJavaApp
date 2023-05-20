@@ -4,7 +4,7 @@
   <groupId>com.mkyong</groupId>
   <artifactId>MyWebApp</artifactId>
   <packaging>jar</packaging>
-  <version>2.0</version>
+  <version>1.0</version>
   <name>MyWebApp Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>

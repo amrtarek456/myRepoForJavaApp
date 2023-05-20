@@ -39,7 +39,7 @@ pipeline {
                 }
                 oldVersion = mavenPom.version
                 //env.version = oldVersion
-                env.version = echo "oldVersion"
+                env.version = echo "$oldVersion"
 
                 println(oldVersion)
                 println(env.version)

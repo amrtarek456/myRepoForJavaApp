@@ -29,7 +29,7 @@ pipeline {
                 script{
                 
                 println(env.oldVersion)
-                env.mavenPom = readenv.mavenPom file: 'MyWebApp/pom.xml'
+                env.mavenPom = readMavenPom file: 'MyWebApp/pom.xml'
                 if (env.mavenPom.equals(env.oldVersion))
                 {
                   println("Equal")

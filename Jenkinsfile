@@ -5,7 +5,8 @@ pipeline {
   maven 'MAVEN3'
   }
     environment {
-       oldVersion = ''                              
+       oldVersion = ''  
+       mavenPom = ''                            
    }
   
     stages {
@@ -28,17 +29,17 @@ pipeline {
                 script{
                 
                 println(env.oldVersion)
-                def mavenPom = readMavenPom file: 'MyWebApp/pom.xml'
-                if (mavenPom.equals(env.oldVersion))
+                env.env.mavenPom = readenv.mavenPom file: 'MyWebApp/pom.xml'
+                if (env.mavenPom.equals(env.oldVersion))
                 {
                   println("Equal")
                 }
                 else {
                   println("Not Equal")
                 }
-                env.oldVersion = mavenPom
+                env.oldVersion = env.mavenPom
                 println(env.oldVersion)
-                nexusArtifactUploader artifacts: [[artifactId: 'MyWebApp', classifier: '', file: "MyWebApp/target/MyWebApp.jar", type: 'jar']], credentialsId: "NEXUS_CRED", groupId: 'com.dept.app', nexusUrl: '20.231.52.56:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'myapp', version: "${mavenPom.version}"
+                nexusArtifactUploader artifacts: [[artifactId: 'MyWebApp', classifier: '', file: "MyWebApp/target/MyWebApp.jar", type: 'jar']], credentialsId: "NEXUS_CRED", groupId: 'com.dept.app', nexusUrl: '20.231.52.56:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'myapp', version: "${env.mavenPom.version}"
           
                 }
                  }

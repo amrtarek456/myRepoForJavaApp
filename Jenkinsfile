@@ -21,18 +21,18 @@ pipeline {
     
     
     
-     stage ("Upload toNexus") {
+     stage ("Upload to Nexus") {
             steps {
                 script{
                 def mavenPom = readMavenPom file: 'MyWebApp/pom.xml'
-               /*  if (mavenPom.equals(oldVersion))
+                if (mavenPom.equals(oldVersion))
                 {
                   println("Equal")
                 }
                 else {
                   println("Not Equal")
                 }
-                def oldVersion = mavenPom */
+                def oldVersion = mavenPom
                 nexusArtifactUploader artifacts: [[artifactId: 'MyWebApp', classifier: '', file: "MyWebApp/target/MyWebApp.jar", type: 'jar']], credentialsId: "NEXUS_CRED", groupId: 'com.dept.app', nexusUrl: '54.152.4.219:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'myapp', version: "${mavenPom.version}"
           
                 }

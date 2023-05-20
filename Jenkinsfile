@@ -34,6 +34,7 @@ pipeline {
                   println("Not Equal")
                 }
                 oldVersion = mavenPom
+                println($oldVersion)
                 nexusArtifactUploader artifacts: [[artifactId: 'MyWebApp', classifier: '', file: "MyWebApp/target/MyWebApp.jar", type: 'jar']], credentialsId: "NEXUS_CRED", groupId: 'com.dept.app', nexusUrl: '20.231.52.56:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'myapp', version: "${mavenPom.version}"
           
                 }

@@ -25,6 +25,7 @@ pipeline {
      stage ("Upload to Nexus") {
             steps {
                 script{
+                println(oldVersion)
                 def mavenPom = readMavenPom file: 'MyWebApp/pom.xml'
                 if (mavenPom.equals(oldVersion))
                 {

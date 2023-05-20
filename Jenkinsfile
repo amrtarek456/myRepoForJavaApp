@@ -54,14 +54,14 @@ pipeline {
 }
  post {
             always{
-                archiveArtifacts artifacts: '*.csv', onlyIfSuccessful: true
+               
                 
                 emailext to: "amrt462@gmail.com",
                 subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
                 body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
-                attachmentsPattern: '*.csv'
                 
-            cleanWs()
+                
+            
             }
         }
 }

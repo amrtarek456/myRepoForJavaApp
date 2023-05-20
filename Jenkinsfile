@@ -52,16 +52,12 @@ pipeline {
     
      
 }
- post {
-            always{
-               
-                
-                emailext to: "amrt462@gmail.com",
-                subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
-                
-                
-            
-            }
+ post{
+        always{
+            emailext to: "amrt462@gmail.com",
+            subject: "Jenkins",
+            body: "Jenkins",
+            attachLog: true
         }
+    }
 }

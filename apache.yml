@@ -15,4 +15,8 @@
       copy:
         src: index.html
         dest: /var/www/html/
+    - name: Copy jar to backup
+  ansible.builtin.copy:
+    src: /var/lib/jenkins/workspace/nexus/MyWebApp/target/*.jar
+    dest: /var/lib/jenkins/workspace/nexus/MyWebApp/backup/*.jar
 ...

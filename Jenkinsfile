@@ -21,7 +21,7 @@ pipeline {
     
     
     
-     stage ("Upload to Nexus") {
+     stage ("Upload toNexus") {
             steps {
                 script{
                 def mavenPom = readMavenPom file: 'MyWebApp/pom.xml'

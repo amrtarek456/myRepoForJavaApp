@@ -10,19 +10,17 @@ pipeline {
        
     }
     stages {
-        stage('Code checkout') {
+     stage('Code checkout') {
             steps {
              checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/amrtarek456/myRepoForJavaApp.git']])
     }
         }
       
-
-    stages {
-        stage('Excute Ansible') {
+    stage('Excute Ansible') {
             steps {
              ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'apache.yml'  }
         }
-    }  
+    
     stage ('Build') {
       steps {
       sh 'mvn clean install -f MyWebApp/pom.xml'

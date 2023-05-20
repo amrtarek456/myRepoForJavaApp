@@ -6,7 +6,7 @@ pipeline {
   }
   
     environment {
-        version = 0
+        version = ''
        
     }
     stages {
@@ -39,7 +39,8 @@ pipeline {
                 }
                 oldVersion = mavenPom.version
                 //env.version = oldVersion
-                env.version = echo "$oldVersion"
+                //env.version = echo "$oldVersion"
+                env.version = env.version.plus($oldVersion)
 
                 println(oldVersion)
                 println(env.version)

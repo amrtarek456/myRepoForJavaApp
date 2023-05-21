@@ -18,8 +18,10 @@ pipeline {
     }
     
     stage ('SonarQube Analysis') {
+      steps{
       withSonarQubeEnv(credentialsId: 'sonarqubetoken') {
     // some block
+     }
      }
     }
 

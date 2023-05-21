@@ -20,11 +20,10 @@ pipeline {
     stage ('SonarQube Analysis') {
       steps{
       withSonarQubeEnv('Sonarqube') {
-          sh "mvn sonar:sonar
-     }
-     }
+          sh "mvn sonar:sonar"
+         }
+       }
     }
-
 
     stage('Excute Ansible') {
             steps {
@@ -52,4 +51,4 @@ pipeline {
             attachLog: true
         }
     }
-}
+    

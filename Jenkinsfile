@@ -4,13 +4,13 @@ pipeline {
   maven 'MAVEN3'
   }
   
-    stages {
-     stage('Code checkout') {
+    stage ("Code scan") {
             steps {
-             checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/amrtarek456/myRepoForJavaApp.git']])
-    }
+             withSonarQubeEnv("sonarqube") {
+                sh "mvn sonar:sonar -f MyWebApp/pom.xml"
+             }   
+            }
         }
-    
     stage ('Build') {
       steps {
       sh 'mvn clean install -f MyWebApp/pom.xml'

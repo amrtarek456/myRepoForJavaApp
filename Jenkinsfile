@@ -23,7 +23,7 @@ pipeline {
                withSonarQubeEnv("sonarqube") {
                 sh "mvn sonar:sonar -f MyWebApp/pom.xml"
                }
-               waitForQualityGate abortPipeline: false, credentialsId: 'sonarqubetoken'
+              
                /* def qg = waitForQualityGate()
                if (qg.status != 'OK') {
                error "Pipeline aborted due to quality gate failure: ${qg.status}"
@@ -34,6 +34,12 @@ pipeline {
             }
         }
 
+    
+    stage("SonarQube Quality Gate check") {
+      steps{
+              waitForQualityGate abortPipeline: true, credentialsId: 'sonarqubetoken'
+      }
+    }
 
     stage('Excute Ansible') {
             steps {

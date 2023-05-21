@@ -21,7 +21,14 @@ pipeline {
       sh 'mvn clean install -f MyWebApp/pom.xml'
       }
     }
-      
+    
+    stage ('SonarQube Analysis') {
+      withSonarQubeEnv(credentialsId: 'sonarqubetoken') {
+    // some block
+}
+    }
+
+
     stage('Excute Ansible') {
             steps {
              ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'playbook.yml'  }

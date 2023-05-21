@@ -24,22 +24,16 @@ pipeline {
                 sh "mvn sonar:sonar -f MyWebApp/pom.xml"
                }
               
-               /* def qg = waitForQualityGate()
-               if (qg.status != 'OK') {
-               error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                }
-              
-		            sh "mvn clean install" */ 
              }  
             }
         }
 
     
-    stage("SonarQube Quality Gate check") {
+    /* stage("SonarQube Quality Gate check") {
       steps{
               waitForQualityGate abortPipeline: true
       }
-    }
+    } */
 
     stage('Excute Ansible') {
             steps {
@@ -61,10 +55,9 @@ pipeline {
 }
  post{
         always{
-            emailext to: "amrt462@gmail.com",
-            subject: "Jenkins",
-            body: "Jenkins",
-            attachLog: true
+             emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
     }
 }

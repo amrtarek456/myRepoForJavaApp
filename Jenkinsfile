@@ -19,7 +19,7 @@ pipeline {
 
     stage ("Code scan") {
             steps {
-             withSonarQubeEnv("sonarqube") {
+             withSonarQubeEnv("Sonarqube") {
                 sh "mvn sonar:sonar -f MyWebApp/pom.xml"
              }   
             }
@@ -36,7 +36,7 @@ pipeline {
                 script{
 
                 def mavenPom = readMavenPom file: 'MyWebApp/pom.xml'
-                nexusArtifactUploader artifacts: [[artifactId: 'MyWebApp', classifier: '', file: "MyWebApp/target/MyWebApp.jar", type: 'jar']], credentialsId: "NEXUS_CRED", groupId: 'com.dept.app', nexusUrl: '20.231.52.56:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'myapp', version: "${mavenPom.version}"
+                nexusArtifactUploader artifacts: [[artifactId: 'MyWebApp', classifier: '', file: "MyWebApp/target/MyWebApp.jar", type: 'jar']], credentialsId: "NEXUS_CRED", groupId: 'com.dept.app', nexusUrl: '172.174.6.170:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'myapp', version: "${mavenPom.version}"
 
                 }
                  }

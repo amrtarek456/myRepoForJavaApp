@@ -27,7 +27,7 @@ pipeline {
       steps{
               waitForQualityGate abortPipeline: true
       }
-   
+     }
     
 
     stage ('Build') {

@@ -17,7 +17,7 @@ pipeline {
                withSonarQubeEnv("sonarqube") {
                 sh "mvn sonar:sonar -f MyWebApp/pom.xml"
                }
-              
+          
              }  
             }
         }

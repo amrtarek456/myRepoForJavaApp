@@ -11,12 +11,6 @@ pipeline {
     }
         }
 
-    stage ('Build') {
-      steps {
-      sh 'mvn clean install -f MyWebApp/pom.xml'
-      }
-    }
-
     stage ("Code scan") {
             steps {
              script{
@@ -34,7 +28,15 @@ pipeline {
               waitForQualityGate abortPipeline: true
       }
     } */
+    
 
+    stage ('Build') {
+      steps {
+      sh 'mvn clean install -f MyWebApp/pom.xml'
+      }
+    }
+
+    
     stage('Excute Ansible') {
             steps {
              ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'playbook.yml'  }
@@ -45,7 +47,7 @@ pipeline {
                 script{
 
                 def mavenPom = readMavenPom file: 'MyWebApp/pom.xml'
-                nexusArtifactUploader artifacts: [[artifactId: 'MyWebApp', classifier: '', file: "MyWebApp/target/MyWebApp.jar", type: 'jar']], credentialsId: "NEXUS_CRED", groupId: 'com.dept.app', nexusUrl: '172.174.6.170:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'myapp', version: "${mavenPom.version}"
+                nexusArtifactUploader artifacts: [[artifactId: 'MyWebApp', classifier: '', file: "MyWebApp/target/MyWebApp.jar", type: 'jar']], credentialsId: "NEXUS_CRED", groupId: 'com.dept.app', nexusUrl: '40.121.81.242:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'myapp', version: "${mavenPom.version}"
 
                 }
                  }

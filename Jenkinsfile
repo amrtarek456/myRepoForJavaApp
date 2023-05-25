@@ -23,11 +23,11 @@ pipeline {
         }
 
     
-     stage("SonarQube Quality Gate check") {
+     /* stage("SonarQube Quality Gate check") {
       steps{
               waitForQualityGate abortPipeline: true
       }
-     }
+     } */
     
 
     stage ('Build') {

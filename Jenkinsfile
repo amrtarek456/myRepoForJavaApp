@@ -17,17 +17,17 @@ pipeline {
                withSonarQubeEnv("sonarqube") {
                 sh "mvn sonar:sonar -f MyWebApp/pom.xml"
                }
-          
+              
              }  
             }
         }
 
     
-    /* stage("SonarQube Quality Gate check") {
+     stage("SonarQube Quality Gate check") {
       steps{
               waitForQualityGate abortPipeline: true
       }
-    } */
+   
     
 
     stage ('Build') {
